@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapport Immobilier Bruxelles</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;max-width:960px;margin:2rem auto;padding:0 1rem}
+    h1{font-size:1.8rem}
+    table{width:100%;border-collapse:collapse;margin-top:1rem}
+    th,td{border:1px solid #ddd;padding:8px;text-align:left}
+    th{background:#f5f5f5}
+    .muted{color:#666}
+  </style>
+</head>
+<body>
+  <h1>Rapport Immobilier Bruxelles</h1>
+  <p class="muted">Annonces: {{ n }} — Prix/m² médian: {{ ppm2_median | round(0) }} €</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Prix</th>
+        <th>Surface</th>
+        <th>€/m²</th>
+        <th>Ville</th>
+        <th>Lien</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in top %}
+      <tr>
+        <td>{{ r.title }}</td>
+        <td>{{ (r.price or 0) | round(0) }} €</td>
+        <td>{{ r.area or '-' }}</td>
+        <td>{{ (r.price_per_m2 or 0) | round(0) }}</td>
+        <td>{{ r.city or '-' }}</td>
+        <td><a href="{{ r.url }}" target="_blank">Voir</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

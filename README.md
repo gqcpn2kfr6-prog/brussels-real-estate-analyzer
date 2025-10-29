@@ -1,6 +1,13 @@
 # Brussels Real Estate Analyzer
 
+[![Run compare](https://github.com/gqcpn2kfr6-prog/brussels-real-estate-analyzer/actions/workflows/compare.yml/badge.svg)](https://github.com/gqcpn2kfr6-prog/brussels-real-estate-analyzer/actions/workflows/compare.yml)
+
 Bot d'analyse du marché immobilier bruxellois.
+
+## Lancer en un clic
+- Ouvrez l'onglet Actions → workflow « compare » → Run workflow
+- Laissez les valeurs par défaut ou choisissez la ville/source puis cliquez sur « Run workflow »
+- Le rapport sera publié (Pages) et/ou disponible en artefact « report-html »
 
 ## Fonctionnalités
 - Scraping (APIs ou pages publiques) d'annonces (Immoweb, Zimmo, ImmoVlan, Notaire) via connecteurs optionnels
@@ -8,26 +15,4 @@ Bot d'analyse du marché immobilier bruxellois.
 - Enrichissement (géocodage, quartiers/stat. stratégiques de Bruxelles, indices CPI)
 - Analyse (prix/m², tendances, anomalies, rendement brut/net)
 - Détection d'opportunités (sous-évaluations, cash-flow > 0, rentabilité cible)
-- Exports (CSV/Parquet) et rapport Markdown automatisé
-
-## Stack
-- Python 3.11, Poetry
-- Pandas, Polars, NumPy, Pydantic
-- DuckDB pour stockage colonne
-- Typer (CLI)
-- Requests/HTTPX, Playwright (scraping optionnel)
-- GeoPandas/Shapely (géospatial)
-- scikit-learn (modèles simples)
-- GitHub Actions (cron) pour refresh quotidien/hebdo
-
-## Legal & Ethique
-- Respect des CGU des sites; privilégier les APIs/offres data officielles
-- Povider des délais, user-agent, robots.txt; pas de charge abusive
-- Données destinées à un usage personnel/étude; vérifier la conformité RGPD
-
-## Démarrage rapide
-```
-poetry install
-poetry run analyzer fetch --source immoweb --city "Bruxelles"
-poetry run analyzer analyze --min-yield 4.5
-```
+- Exports (CSV/Parquet) et rapport Markdown/HTML automatisé

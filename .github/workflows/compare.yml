@@ -1,0 +1,55 @@
+name: compare
+on:
+  workflow_dispatch:
+    inputs:
+      city:
+        description: "Ville (ex: Bruxelles)"
+        required: false
+        default: "Bruxelles"
+      source:
+        description: "Source (immoweb|zimmo|immovlan|notaire)"
+        required: false
+        default: "immoweb"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Installer Poetry
+        run: pipx install poetry
+      - name: Installer dépendances
+        run: poetry install --no-interaction --no-root
+      - name: Exécuter pipeline
+        run: |
+          poetry run analyzer fetch --source "${{ github.event.inputs.source }}" --city "${{ github.event.inputs.city }}" --limit 200 || true
+          poetry run analyzer analyze || true
+          poetry run python -c "from analyzer.jobs.report_html import render_html; render_html('reports/index.html')" || true
+      - name: Upload artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-html
+          path: reports/
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports
+  deploy:
+    if: ${{ always() }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: run
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

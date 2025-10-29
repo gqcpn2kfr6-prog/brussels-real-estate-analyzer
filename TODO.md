@@ -1,0 +1,5 @@
+- [x] Implémenter connecteur Immoweb (API de recherche)
+- [ ] Ajouter fallback Playwright si l'API est indisponible
+- [x] Générer rapport HTML via Jinja2
+- [ ] Publier GitHub Pages via workflow
+- [ ] Enrichir calculs de rendement net (charges, notaire, loyers)
